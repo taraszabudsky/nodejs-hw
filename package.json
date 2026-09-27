@@ -1,0 +1,33 @@
+{
+  "name": "nodejs-hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
+    "pino-http": "^10.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.9.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taraszabudsky/nodejs-hw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/taraszabudsky/nodejs-hw/issues"
+  },
+  "homepage": "https://github.com/taraszabudsky/nodejs-hw#readme"
+}
