@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import dns from 'node:dns';
 import express from 'express';
 import cors from 'cors';
 
@@ -10,6 +11,8 @@ import notesRoutes from './routes/notesRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 await connectMongoDB();
 
@@ -23,7 +26,6 @@ app.use(notesRoutes);
 
 // 404
 app.use(notFoundHandler);
-
 
 //це в кінці має бути(нотатки для себе)
 app.use(errorHandler);
