@@ -35,13 +35,10 @@ export const getAllNotes = async (req, res) => {
 };
 
 export const getNoteById = async (req, res) => {
-};
+  const { noteId } = req.params;
 
-export const createNote = async (req, res) => {
-};
+  const note = await Note.findById(noteId);
 
-export const deleteNote = async (req, res) => {
-};
-
-export const updateNote = async (req, res) => {
-};
+  if (!note) {
+    throw createHttpError(404, 'Note not found');
+ 
