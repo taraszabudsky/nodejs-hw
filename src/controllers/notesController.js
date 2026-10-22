@@ -6,7 +6,7 @@ export const getAllNotes = async (req, res) => {
 
   const skip = (page - 1) * perPage;
 
-  const notesQuery = Note.find();
+  const notesQuery = Note.find({ userId: req.user._id });
 
   if (tag) {
     notesQuery.where('tag').equals(tag);
@@ -40,7 +40,10 @@ export const getAllNotes = async (req, res) => {
 export const getNoteById = async (req, res) => {
   const { noteId } = req.params;
 
-  const note = await Note.findById(noteId);
+  const note = await Note.findOne({
+    _id: noteId,
+    userId: req.user._id,
+  });
 
   if (!note) {
     throw createHttpError(404, 'Note not found');
@@ -50,7 +53,10 @@ export const getNoteById = async (req, res) => {
 };
 
 export const createNote = async (req, res) => {
-  const note = await Note.create(req.body);
+  const note = await Note.create({
+    ...req.body,
+    userId: req.user._id,
+  });
 
   res.status(201).json(note);
 };
@@ -58,7 +64,10 @@ export const createNote = async (req, res) => {
 export const deleteNote = async (req, res) => {
   const { noteId } = req.params;
 
-  const note = await Note.findByIdAndDelete(noteId);
+  const note = await Note.findOneAndDelete({
+    _id: noteId,
+    userId: req.user._id,
+  });
 
   if (!note) {
     throw createHttpError(404, 'Note not found');
@@ -70,9 +79,11 @@ export const deleteNote = async (req, res) => {
 export const updateNote = async (req, res) => {
   const { noteId } = req.params;
 
-  const note = await Note.findByIdAndUpdate(noteId, req.body, {
-    returnDocument: 'after',
-  });
+  const note = await Note.findOneAndUpdate(
+    { _id: noteId, userId: req.user._id },
+    req.body,
+    { returnDocument: 'after' },
+  );
 
   if (!note) {
     throw createHttpError(404, 'Note not found');
