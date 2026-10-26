@@ -134,12 +134,16 @@ export const requestResetEmail = async (req, res) => {
 
   try {
     await sendEmail({
+      from: process.env.SMTP_FROM,
       to: email,
       subject: 'Reset your password',
       html,
     });
   } catch {
-    throw createHttpError(500, 'Failed to send the email, please try again later.');
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
   }
 
   res.status(200).json({
